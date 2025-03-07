@@ -71,8 +71,8 @@ SITE_ID = 1
 env = environ.Env()
 environ.Env.read_env() 
 
-client_id = env( 'GOOGLE_OAUTH_CLIENT_ID' )
-secret = env( 'GOOGLE_OAUTH_CLIENT_SECRET' )
+GOOGLE_OAUTH_CLIENT_ID=env('ID')
+GOOGLE_OAUTH_CLIENT_SECRET=env('SECRET')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -84,8 +84,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'APP': {
-            'client_id' : client_id  ,  
-            'secret' :  secret ,  
+            'client_id' : GOOGLE_OAUTH_CLIENT_ID ,  
+            'secret' :  GOOGLE_OAUTH_CLIENT_SECRET ,  
         }
     }
 }
