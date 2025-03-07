@@ -1,13 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
-class CustomUser( AbstractUser ) :   
-    phone_number = models.CharField( max_length=17, blank=True )
-    address = models.TextField()
-    profile_image = models.ImageField( upload_to='profile_images/', null=True, blank=True ) 
-    created_at = models.DateTimeField( auto_now_add=True )
-    updated_at = models.DateTimeField( auto_now=True )
-
+from django.contrib.auth.models import User
 class LocatedCity( models.Model ) :
     name = models.CharField( max_length = 20 ) 
     def __str__( self ) :
@@ -15,7 +7,7 @@ class LocatedCity( models.Model ) :
 
 class ManufacturingLabratory( models.Model ) :
     name = models.CharField( max_length = 255 ) 
-    location = models.ForeignKey( LocatedCity , on_delete = models.CASCADE , related_name = 'Lab-Location' ) 
+    location = models.ForeignKey( LocatedCity , on_delete = models.CASCADE , related_name = 'Lab_Location' ) 
     active = models.BooleanField( default = True ) 
     def __str__( self ) :
         return self.name
@@ -37,17 +29,17 @@ class ProductType( models.Model ) :
     
 class Product( models.Model ) :
     name = models.CharField( max_length = 255 ) 
-    manufacturer = models.ForeignKey( ManufacturingLabratory , on_delete = models.CASCADE , related_name = 'Product-Manuacturer' )
-    classification = models.ForeignKey( ProductClassification , on_delete = models.CASCADE , related_name = 'Product-Class' )
-    productType = models.ForeignKey( ProductType , on_delete = models.CASCADE , related_name = 'Product-Type' )  
+    manufacturer = models.ForeignKey( ManufacturingLabratory , on_delete = models.CASCADE , related_name = 'Product_Manuacturer' )
+    classification = models.ForeignKey( ProductClassification , on_delete = models.CASCADE , related_name = 'Product_Class' )
+    productType = models.ForeignKey( ProductType , on_delete = models.CASCADE , related_name = 'Product_Type' )  
     description = models.TextField() 
-    constraints = models.ManyToManyField( ProductConstraint , related_name = 'Product-Constraints' ) 
+    constraints = models.ManyToManyField( ProductConstraint , related_name = 'Product_Constraints' ) 
     needs_perscription = models.BooleanField( default = False ) 
     def __str__( self ) :
         return self.name 
     
 class Pharmacy( models.Model ) :
-    owner = models.OneToOneField( CustomUser , related_name = 'pharmacy-owner' , on_delete = models.CASCADE ) 
+    owner = models.OneToOneField( User , related_name = 'pharmacy_owner' , on_delete = models.CASCADE ) 
     name = models.CharField( max_length = 200 )
     located_city = models.ForeignKey( LocatedCity , on_delete = models.CASCADE ) 
     address = models.TextField()
@@ -55,13 +47,13 @@ class Pharmacy( models.Model ) :
         return self.name 
 
 class PharmacyStorageOfProducts( models.Model ) :
-    pharmacy = models.ForeignKey( Pharmacy , on_delete = models.CASCADE , related_name = 'pharmacy-storage' ) 
-    products = models.ManyToManyField( Product , related_name = 'linking-products' ) 
+    pharmacy = models.ForeignKey( Pharmacy , on_delete = models.CASCADE , related_name = 'pharmacy_storage' ) 
+    products = models.ManyToManyField( Product , related_name = 'linking_products' ) 
     count = models.IntegerField( default = 0 )  
     
 class Envoice( models.Model ) :
-    pharmacy = models.ForeignKey( Pharmacy , on_delete = models.CASCADE , related_name = 'pharmacy-envoice' ) 
-    products = models.ManyToManyField( Product , related_name = 'envoice-products' ) 
+    pharmacy = models.ForeignKey( Pharmacy , on_delete = models.CASCADE , related_name = 'pharmacy_envoice' ) 
+    products = models.ManyToManyField( Product , related_name = 'envoice_products' ) 
     count = models.IntegerField( default = 1 ) 
     date = models.DateTimeField( auto_now_add = True ) 
     is_checked = models.BooleanField( default = False )

@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os 
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,7 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites' ,
+    'allauth' , 
+    'allauth.account' , 
+    'allauth.socialaccount' , 
+    'allauth.socialaccount.providers.google' , 
+    'dj_rest_auth' , 
+    'dj_rest_auth.registration' ,
     'rest_framework' , 
+    'rest_framework.authtoken' , 
     'api' , 
 ]
 
@@ -49,7 +58,37 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+] 
+
+SITE_ID = 1  
+
+env = environ.Env()
+environ.Env.read_env() 
+
+client_id = env( GOOGLE_OAUTH_CLIENT_ID )
+secret = env( GOOGLE_OAUTH_CLIENT_SECRET )
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id' : client_id  ,  
+            'secret' :  secret ,  
+        }
+    }
+}
 
 ROOT_URLCONF = 'pharma.urls'
 
