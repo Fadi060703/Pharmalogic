@@ -66,29 +66,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ] 
 
-SITE_ID = 1  
 
-env = environ.Env()
-environ.Env.read_env() 
-
-GOOGLE_OAUTH_CLIENT_ID=env('ID')
-GOOGLE_OAUTH_CLIENT_SECRET=env('SECRET')
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'APP': {
-            'client_id' : GOOGLE_OAUTH_CLIENT_ID ,  
-            'secret' :  GOOGLE_OAUTH_CLIENT_SECRET ,  
-        }
-    }
-}
 
 ROOT_URLCONF = 'pharma.urls'
 
