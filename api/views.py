@@ -5,9 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView , RetrieveUpdateDestroyAPIView 
-from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from dj_rest_auth.utils import jwt_encode
-from dj_rest_auth.registration.views import SocialLoginView
 from django.conf import settings
 from django.shortcuts import redirect
 from django.http import JsonResponse 
@@ -25,7 +23,7 @@ class GoogleLogin(APIView):
             "response_type=code&"
             "scope=email profile"
         )
-        return redirect(google_auth_url)
+        return redirect( google_auth_url )
     
 @api_view( [ 'GET' ] )
 def google_callback( request : Request ):
@@ -62,22 +60,8 @@ def google_callback( request : Request ):
     email = idinfo[ 'email' ]
     User = get_user_model()
     user, created = User.objects.get_or_create( email = email , defaults = { 'username': email } )
-    token = jwt_encode( user )
-
+    token = str( jwt_encode( user ) )   
     return JsonResponse( { 'token' : token , 'user_id' : user.id } , status = status.HTTP_200_OK )
 
-class LCPSOPV( APIView ) :
-    serializer_class = PharamcyStorageOfProductsSerializer 
-    def get( self , request : Request ) :
-        list_of_prod = PharmacyStorageOfProducts.objects.all() 
-        serializer = self.serializer_class( list_of_prod , many = True ) 
-        return Response( data = serializer.data , status = status.HTTP_200_OK ) 
-    def post( self , request : Request ) :
-        rec_list = request.data 
-        serializer = self.serializer_class( data = rec_list ) 
-        if serializer.is_valid() :
-            serializer.save()
-            return Response( status = status.HTTP_201_CREATED ) 
-        return Response( status = status.HTTP_400_BAD_REQUEST ) 
 
 
