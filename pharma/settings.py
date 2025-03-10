@@ -68,8 +68,6 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 2
 
-
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
