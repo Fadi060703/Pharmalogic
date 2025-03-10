@@ -31,7 +31,7 @@ class ProductType( models.Model ) :
     
 class Product( models.Model ) :
     name = models.CharField( max_length = 255 ) 
-    manufacturer = models.ForeignKey( ManufacturingLabratory , on_delete = models.CASCADE , related_name = 'Product_Manuacturer' )
+    manufacturer = models.ForeignKey( ManufacturingLaboratory , on_delete = models.CASCADE , related_name = 'Product_Manuacturer' )
     classification = models.ForeignKey( ProductClassification , on_delete = models.CASCADE , related_name = 'Product_Class' )
     productType = models.ForeignKey( ProductType , on_delete = models.CASCADE , related_name = 'Product_Type' )  
     description = models.TextField() 
