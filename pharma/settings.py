@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ek9!4r7(e=i1^sw-ymkf0dpah*+^3o)v)cxrfc3njr2a+pbk$a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ '*' ] 
 
 
 # Application definition
@@ -65,6 +65,26 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ] 
+
+SITE_ID = 2
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id' : X ,  
+            'secret' :   X ,  
+        }
+    }
+}
 
 
 
