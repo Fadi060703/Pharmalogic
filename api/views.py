@@ -62,6 +62,44 @@ def google_callback( request : Request ):
     user, created = User.objects.get_or_create( email = email , defaults = { 'username': email } )
     token = str( jwt_encode( user ) )   
     return JsonResponse( { 'token' : token , 'user_id' : user.id } , status = status.HTTP_200_OK )
+ 
+class ListCreateLocatedCityView( ListCreateAPIView ) :
+    queryset = LocatedCity.objects.all() 
+    serializer_class = LocatedCitySerializer 
+    
+class LocatedCityDetailView( RetrieveUpdateDestroyAPIView ) :
+    queryset = LocatedCity.objects.all() 
+    serializer_class = LocatedCitySerializer 
+    
+class ListCreateManufacturingLaboratoryView( ListCreateAPIView ) :
+    queryset = ManufacturingLaboratory.objects.all() 
+    serializer_class = ManufacturingLaboratorySerializer 
+    
+class ManufacturingLaboratoryDetailView( RetrieveUpdateDestroyAPIView ) :
+    queryset = ManufacturingLaboratory.objects.all() 
+    serializer_class = ManufacturingLaboratorySerializer 
 
+class ListCreateProductClassificationView( ListCreateAPIView ) :
+    queryset = ProductClassification.objects.all()
+    serializer_class = ProductClassificationSerializer 
+    
+class ProductClassificationDetailView( RetrieveUpdateDestroyAPIView ) :
+    queryset = ProductClassification.objects.all()
+    serializer_class = ProductClassificationSerializer 
+    
+class ListCreateProductConstraintView( ListCreateAPIView ) :
+    queryset = ProductConstraint.objects.all() 
+    serializer_class = ProductConstraintSerializer 
+    
+class ProductConstraintDetailView( RetrieveUpdateDestroyAPIView ) :
+    queryset = ProductConstraint.objects.all() 
+    serializer_class = ProductConstraintSerializer 
+    
+class ListCreateProductTypeView( ListCreateAPIView ) :
+    queryset = ProductType.objects.all() 
+    serializer_class = ProductTypeSerializer 
 
-
+class ProductTypeDetailView( RetrieveUpdateDestroyAPIView ) :
+    queryset = ProductType.objects.all() 
+    serializer_class = ProductTypeSerializer 
+    

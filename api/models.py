@@ -60,7 +60,7 @@ class InvoiceItem( models.Model ) :
            
 class Invoice( models.Model ) :
     pharmacy = models.ForeignKey( Pharmacy , on_delete = models.CASCADE , related_name = 'pharmacy_envoice' ) 
-    products = models.ManyToManyField( Product , through = 'InvoiceItems' , related_name = 'Products_Bought' )   
+    products = models.ManyToManyField( Product , through = 'InvoiceItem' , related_name = 'Products_Bought' )   
     date = models.DateTimeField( auto_now_add = True ) 
     is_checked = models.BooleanField( default = False )
         
