@@ -64,5 +64,3 @@ class Invoice( models.Model ) :
     date = models.DateTimeField( auto_now_add = True ) 
     is_checked = models.BooleanField( default = False )
         
-    
-    
