@@ -54,6 +54,7 @@ class PharmacyStorageOfProducts( models.Model ) :
     count = models.IntegerField( default = 0 , validators = [ MinValueValidator( 0 ) ] )  
     
 class InvoiceItem( models.Model ) :
+    invoice = models.ForeignKey( 'Invoice' , on_delete = models.CASCADE ) 
     item = models.ForeignKey( Product , on_delete = models.CASCADE , related_name = 'Items_Envoice' ) 
     price = models.DecimalField( max_digits = 20 , decimal_places = 2 )  
     count = models.IntegerField( default = 0 , validators = [ MinValueValidator( 1 ) ] )

@@ -35,7 +35,7 @@ class ProductTypeSerializer( serializers.ModelSerializer ) :
         
 class ProductSerializer( serializers.ModelSerializer ) :
     manufacturer = ManufacturingLaboratorySerializer( read_only = True )
-    classification = ProductClassification( read_only = True ) 
+    classification = ProductClassificationSerializer( read_only = True ) 
     type = ProductTypeSerializer( read_only = True ) 
     constraints = ProductConstraintSerializer()
     class Meta :
